@@ -28,12 +28,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      # (2) application.properties 설정
-      - name: Set application.properties
+      # (2) application.yml 설정
+      - name: Set application.yml
         run: |
-          touch ./src/main/resources/application.properties
-          echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.properties
-          cat ./src/main/resources/application.properties
+          touch ./src/main/resources/application.yml
+          echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.yml
+          cat ./src/main/resources/application.yml
 
       # (3) gradlew 권한 추가
       - name: Run chmod to make gradlew executable
