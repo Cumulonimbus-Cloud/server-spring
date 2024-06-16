@@ -9,7 +9,7 @@ env:
   AWS_REGION: ap-southeast-1
   S3_BUCKET_NAME: inha-team-04-s3
   CODE_DEPLOY_APPLICATION_NAME: inha-team-04-app
-  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: inha-team-04-dev
+  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: inha-team-04-bg
 
 permissions:
   contents: read
