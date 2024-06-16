@@ -1,5 +1,7 @@
 package inha.cumulonimbus_cloud.common.config;
 
+import inha.cumulonimbus_cloud.common.exceptions.handler.CustomAccessDeniedHandler;
+import inha.cumulonimbus_cloud.common.exceptions.handler.CustomAuthenticationEntryPoint;
 import inha.cumulonimbus_cloud.utils.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -9,8 +11,10 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 import static inha.cumulonimbus_cloud.domain.user.enums.Permission.*;
 import static inha.cumulonimbus_cloud.domain.user.enums.Role.ADMIN;
@@ -26,7 +30,6 @@ public class SecurityConfig {
     private static final String URL = "/api/v1/management/**";
     private static final String[] WHITE_LIST_URL = {
             "/",
-            "/api/v1",
             "/api/v1/auth/**",
             "/api/v1/test/**",
             "/v2/api-docs",
@@ -42,6 +45,9 @@ public class SecurityConfig {
     };
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
+    private final LogoutHandler logoutHandler;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
 
 
@@ -62,7 +68,16 @@ public class SecurityConfig {
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .authenticationProvider(authenticationProvider);
+                .authenticationProvider(authenticationProvider)
+                .logout(logout ->
+                        logout.logoutUrl("/api/v1/auth/logout")
+                                .addLogoutHandler(logoutHandler)
+                                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
+                );
+        http.exceptionHandling(exceptionHandling -> exceptionHandling
+                .authenticationEntryPoint(customAuthenticationEntryPoint));
+        http.exceptionHandling(exceptionHandling -> exceptionHandling
+                .accessDeniedHandler(customAccessDeniedHandler));
         return http.build();
 
     }
