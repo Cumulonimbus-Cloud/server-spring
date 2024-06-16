@@ -39,6 +39,8 @@ public enum ErrorStatus implements BaseErrorCode {
     INVALID_PAGE(HttpStatus.BAD_REQUEST, "PAGE4000", "페이지는 0 이상이어야 합니다."),
     //사이즈는 무조건 10
     INVALID_SIZE_10(HttpStatus.BAD_REQUEST, "PAGE4001", "사이즈는 10이어야 합니다."),
+    //json 변환
+    JSON_CONVERT_ERROR(HttpStatus.BAD_REQUEST, "JSON4000", "JSON 변환에 실패하였습니다."),
 
 
     /**
