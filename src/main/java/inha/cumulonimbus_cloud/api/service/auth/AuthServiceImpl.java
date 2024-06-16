@@ -41,7 +41,9 @@ public class AuthServiceImpl implements AuthService {
         switch (socialType){
             case KAKAO: {
                 GetKakaoRes getKakaoRes = kakaoLoginService.getUserInfo(kakaoLoginService.getAccessToken(authorizationCode));
+
                 boolean isRegistered = userJpaRepository.existsByUsernameAndSocialTypeAndState(getKakaoRes.getId(), SocialType.KAKAO, ACTIVE);
+
                 if (!isRegistered) {
                     User user = AuthConverter.toUser(getKakaoRes);
                     userJpaRepository.save(user);
@@ -49,7 +51,6 @@ public class AuthServiceImpl implements AuthService {
                 User user = userJpaRepository.findByUsernameAndState(getKakaoRes.getId(), ACTIVE)
                         .orElseThrow(() -> new BaseException(NOT_FIND_USER));
                 String accessToken = jwtProvider.generateToken(user);
-                String refreshToken = jwtProvider.generateRefreshToken(user);
                 return AuthConverter.toPostSocialRes(user, accessToken);
             }
             case GOOGLE: {
@@ -64,5 +65,8 @@ public class AuthServiceImpl implements AuthService {
 
         }
     }
+
+
+
 }
 
