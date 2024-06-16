@@ -1,7 +1,7 @@
 name: Deploy to Amazon EC2 (Production)
 
 on:
-  push:
+  pull_request:
     branches:
       - main
 
@@ -9,7 +9,7 @@ env:
   AWS_REGION: ap-southeast-1
   S3_BUCKET_NAME: inha-team-04-s3
   CODE_DEPLOY_APPLICATION_NAME: inha-team-04-app
-  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: inha-team-04-prod
+  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: inha-team-04-dev
 
 permissions:
   contents: read
@@ -18,7 +18,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    environment: production
+    environment: development
 
     steps:
       - name: Checkout
@@ -51,14 +51,16 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
+      - name: Rename appspec-prod.yml to appspec.yml
+        run: mv appspec-prod.yml appspec.yml
+
       - name: Upload to AWS S3
         run: |
           aws deploy push \
             --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
             --ignore-hidden-files \
             --s3-location s3://$S3_BUCKET_NAME/$GITHUB_SHA.zip \
-            --source . \
-            --appspec-filename appspec-prod.yml
+            --source .
 
       - name: Deploy to AWS EC2 from S3
         run: |

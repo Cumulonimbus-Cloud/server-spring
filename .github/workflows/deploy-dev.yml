@@ -1,9 +1,6 @@
 name: Deploy to Amazon EC2 (Development)
 
 on:
-  push:
-    branches:
-      - develop
   pull_request:
     branches:
       - develop
@@ -54,14 +51,16 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
+      - name: Rename appspec-dev.yml to appspec.yml
+        run: mv appspec-dev.yml appspec.yml
+
       - name: Upload to AWS S3
         run: |
           aws deploy push \
             --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
             --ignore-hidden-files \
             --s3-location s3://$S3_BUCKET_NAME/$GITHUB_SHA.zip \
-            --source . \
-            --appspec-filename appspec-dev.yml
+            --source .
 
       - name: Deploy to AWS EC2 from S3
         run: |
