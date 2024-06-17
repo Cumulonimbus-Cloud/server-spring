@@ -1,6 +1,6 @@
 package inha.cumulonimbus_cloud.utils;
 
-import inha.cumulonimbus_cloud.domain.user.User;
+import inha.cumulonimbus_cloud.user.domain.User;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;

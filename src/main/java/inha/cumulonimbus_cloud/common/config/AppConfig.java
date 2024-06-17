@@ -1,6 +1,6 @@
 package inha.cumulonimbus_cloud.common.config;
 
-import inha.cumulonimbus_cloud.domain.user.repository.UserJpaRepository;
+import inha.cumulonimbus_cloud.user.domain.repository.UserJpaRepository;
 import inha.cumulonimbus_cloud.utils.ApplicationAuditAware;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
