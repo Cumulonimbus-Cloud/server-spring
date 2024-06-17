@@ -15,7 +15,8 @@ public enum SuccessStatus implements BaseCode {
 
     OAUTH_OK(HttpStatus.OK, "USER2003", "소셜 로그인 성공"),
     GET_CHAT_HISTORY_OK(HttpStatus.OK, "CHAT2000", "챗봇 대화 내역 조회 성공"),
-    POST_CHAT_OK(HttpStatus.OK, "CHAT2001", "챗봇 대화 성공");
+    POST_CHAT_OK(HttpStatus.OK, "CHAT2001", "챗봇 대화 성공"),
+    POST_GRADE_OK(HttpStatus.OK, "GRADE2000", "성적표 크롤링 성공");
     private final HttpStatus httpStatus;
     private final String code;
     private final String message;
