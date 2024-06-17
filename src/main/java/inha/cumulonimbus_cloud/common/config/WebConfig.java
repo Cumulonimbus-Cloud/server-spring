@@ -17,13 +17,4 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowCredentials(true);
     }
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/{spring:[\\w-]+}")
-                .setViewName("forward:/");
-        registry.addViewController("/**/{spring:[\\w-]+}")
-                .setViewName("forward:/");
-        registry.addViewController("/{spring:[\\w-]+}/**{spring:[\\w-]+}")
-                .setViewName("forward:/");
-    }
 }
