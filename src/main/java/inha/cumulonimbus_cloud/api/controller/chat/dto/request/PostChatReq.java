@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class PostChatReq {
 
     private String question;
+    private Long userId;
 }
