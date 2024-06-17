@@ -12,7 +12,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://inha-team-04-s3.s3-website-ap-southeast-1.amazonaws.com", "http://inha-team-04-prod-s3.s3-website-ap-southeast-1.amazonaws.com", "http://localhost:3000") // 리액트 앱의 주소 및 S3 주소 추가
-                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
                 .allowedHeaders("*")
                 .allowCredentials(true);
     }
