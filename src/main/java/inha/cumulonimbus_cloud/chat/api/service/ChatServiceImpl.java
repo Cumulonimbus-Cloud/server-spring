@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import inha.cumulonimbus_cloud.chat.api.controller.dto.request.PostChatReq;
 import inha.cumulonimbus_cloud.chat.api.controller.dto.response.GetChatRes;
 import inha.cumulonimbus_cloud.chat.api.controller.dto.response.PostChatRes;
+import inha.cumulonimbus_cloud.chat.domain.Chat;
+import inha.cumulonimbus_cloud.chat.domain.repository.ChatJpaRepository;
 import inha.cumulonimbus_cloud.common.exceptions.BaseException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import static inha.cumulonimbus_cloud.common.code.status.ErrorStatus.JSON_CONVERT_ERROR;
+import static inha.cumulonimbus_cloud.common.code.status.ErrorStatus.NOT_EXIST_CHAT;
 
 @Service
 @RequiredArgsConstructor
@@ -29,15 +32,18 @@ public class ChatServiceImpl implements ChatService {
     @Value("${flask.url}")
     private String flaskServerUrl;
 
+    private final ChatJpaRepository chatJpaRepository;
+
     @Override
     public PostChatRes getAnswer(Long userId, PostChatReq postChatReq) {
+        Chat chat = chatJpaRepository.findById(postChatReq.getChatId()).orElseThrow(() -> new BaseException(NOT_EXIST_CHAT));
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         String json;
         try {
             Map<String, Object> requestBody = new HashMap<>();
-            requestBody.put("question", postChatReq.getQuestion());
+            requestBody.put("question", chat.getQuestion());
             requestBody.put("userId", userId);  // 사용자 ID 추가
             json = new ObjectMapper().writeValueAsString(requestBody);
         } catch (JsonProcessingException e) {

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PostChatReq {
 
-    @Schema(description = "유저의 질문", example = "내가 안들은 필수 과목들이 뭐야?")
+    @Schema(description = "유저의 질문", example = "1")
     @NotNull
-    private String question;
+    private String chatId;
 }
