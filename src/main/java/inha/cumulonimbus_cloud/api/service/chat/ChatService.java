@@ -7,7 +7,7 @@ import inha.cumulonimbus_cloud.common.BaseResponse;
 
 public interface ChatService {
 
-    PostChatRes getAnswer(PostChatReq postChatReq);
+    PostChatRes getAnswer(Long userId, PostChatReq postChatReq);
 
     GetChatRes getChatHistory(Long userId);
 }
