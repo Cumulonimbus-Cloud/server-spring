@@ -16,9 +16,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
-import static inha.cumulonimbus_cloud.domain.user.enums.Permission.*;
-import static inha.cumulonimbus_cloud.domain.user.enums.Role.ADMIN;
-import static inha.cumulonimbus_cloud.domain.user.enums.Role.MANAGER;
+import static inha.cumulonimbus_cloud.user.domain.enums.Permission.*;
+import static inha.cumulonimbus_cloud.user.domain.enums.Role.ADMIN;
+import static inha.cumulonimbus_cloud.user.domain.enums.Role.MANAGER;
 import static org.springframework.http.HttpMethod.*;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
