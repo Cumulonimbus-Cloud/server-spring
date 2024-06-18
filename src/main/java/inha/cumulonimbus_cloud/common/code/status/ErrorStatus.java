@@ -45,6 +45,8 @@ public enum ErrorStatus implements BaseErrorCode {
     S3_UPLOAD_ERROR(HttpStatus.BAD_REQUEST, "S34000", "S3 업로드에 실패하였습니다."),
     //존재하지 않는 질문
     NOT_EXIST_CHAT(HttpStatus.BAD_REQUEST, "CHAT4000", "존재하지 않는 질문입니다."),
+    //잘못된 질문입니다
+    INVALID_CHAT(HttpStatus.BAD_REQUEST, "CHAT4001", "잘못된 질문입니다."),
 
 
     /**
