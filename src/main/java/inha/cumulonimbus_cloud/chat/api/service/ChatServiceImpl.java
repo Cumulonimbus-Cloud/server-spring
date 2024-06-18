@@ -20,8 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static inha.cumulonimbus_cloud.common.code.status.ErrorStatus.JSON_CONVERT_ERROR;
-import static inha.cumulonimbus_cloud.common.code.status.ErrorStatus.NOT_EXIST_CHAT;
+import static inha.cumulonimbus_cloud.common.code.status.ErrorStatus.*;
 
 @Service
 @RequiredArgsConstructor
@@ -41,10 +40,20 @@ public class ChatServiceImpl implements ChatService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         String json;
+        if(postChatReq.getChatId().equals("6") && postChatReq.getEtc() == null) {
+            throw new BaseException(INVALID_CHAT);
+        }
         try {
             Map<String, Object> requestBody = new HashMap<>();
-            requestBody.put("question", chat.getQuestion());
+            if(postChatReq.getChatId().equals("6") && postChatReq.getEtc() != null) {
+                requestBody.put("question", postChatReq.getEtc());
+            }
+            else {
+                requestBody.put("question", chat.getQuestion());
+            }
             requestBody.put("userId", userId);  // 사용자 ID 추가
+            requestBody.put("chatId", postChatReq.getChatId());
+            requestBody.put("etc", postChatReq.getEtc());
             json = new ObjectMapper().writeValueAsString(requestBody);
         } catch (JsonProcessingException e) {
             throw new BaseException(JSON_CONVERT_ERROR);
