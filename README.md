@@ -32,7 +32,7 @@
 기존 교내 포털에서는 졸업요건이나 이수체계를 한눈에 보기 어려워 많은 학생들이 불편을 겪고 있다는 피드백을 바탕으로 기획되었습니다
 
 
-[**🔗 서비스 데모 영상 바로가기 Click !**](https://www.youtube.com/shorts/i7bJ_FCv0YEY) 👈
+[**🔗 서비스 데모 영상 바로가기 Click !**](https://www.youtube.com/shorts/i7bJ_FCv0YE) 👈
 
 [**🔗 프론트엔드 저장소 바로가기 Click !**](https://github.com/DayoookE/dayoook-e-client) 👈
 
